@@ -1,4 +1,4 @@
-# ModaMind 🧠👗
+# ModaMind
 
 ### Multi-Agent Fashion Brand Intelligence Platform
 
