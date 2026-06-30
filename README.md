@@ -96,6 +96,11 @@ python app.py
 * Professional PDF report generation
 * Interactive analytics dashboard
 
+## Notes
+ModaMind uses `gemini-flash-latest`, Google's alias for their current 
+stable Flash model. This means the project automatically benefits from 
+Google's latest Flash model improvements over time without requiring 
+manual model-name updates in the code.
 ---
 
 ## Author
