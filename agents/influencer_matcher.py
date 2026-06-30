@@ -4,7 +4,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL
+from utils.config import client, MODEL , REGION_CONTEXT
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -22,13 +22,15 @@ def influencer_matcher_agent(brand_name: str, category: str,
     
     print(f"[Influencer Matcher] Finding influencers for {brand_name}...")
     
-    query1 = f"top fashion influencers {category} {target_audience} Instagram TikTok 2025"
-    query2 = f"{brand_name} brand ambassador influencer collaboration fit aesthetic"
-    query3 = f"best {category} content creators authentic engagement {target_audience}"
-    
+    query1 = f"top Indian fashion influencers {category} {target_audience} Instagram TikTok 2025"
+    query2 = f"{brand_name} brand ambassador influencer collaboration Indian aesthetic"
+    query3 = f"best {category} content creators Indian authentic engagement {target_audience}"
+    query4 = f"top global fashion influencers {category} {target_audience} 2025"
+
     results = (web_search(query1, num_results=4) +
                web_search(query2, num_results=2) +
-               web_search(query3, num_results=2))
+               web_search(query3, num_results=2) +
+                web_search(query4, num_results=2))
     
     search_context = "\n\n".join([f"Source {i+1}: {r}" 
                                    for i, r in enumerate(results)])
@@ -57,12 +59,15 @@ event appearance, content series, affiliate partnership
 
 Fit score: 1-10 (10 = perfect match on aesthetic + audience + values)
 
+Do NOT deviate from the 3 Indian + 2 international split. This is a strict requirement, not a suggestion.
+
 Return ONLY a valid JSON object. No explanation, no markdown.
 Format:
 {{
   "shortlist": [
     {{
       "name": "Full Name or Handle",
+      "region": "India",
       "platform": "Instagram / TikTok / Both",
       "follower_tier": "Nano/Micro/Mid/Macro/Mega",
       "why_they_fit": "Specific reason tied to brand identity",
@@ -71,7 +76,7 @@ Format:
       "fit_score": 8
     }}
   ],
-  "strategy_note": "Overall influencer strategy recommendation for {brand_name}"
+  "strategy_note": "Overall influencer strategy recommendation for {brand_name},  including why this India-global mix makes sense"
 }}
 """
     

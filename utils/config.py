@@ -16,3 +16,13 @@ client = genai.Client(api_key=api_key)
 # The new SDK calls client.models.generate_content() directly.
 # We export the client and the model name as a string.
 MODEL = "models/gemini-2.5-flash"
+
+# Shared regional weighting instruction — imported by all agents
+REGION_CONTEXT = """
+IMPORTANT REGIONAL FOCUS:
+Weight your analysis 60% toward the Indian fashion market and 40% toward 
+global/international markets. Prioritize Indian consumer behavior, Indian 
+fashion trends, Indian brands and competitors, Indian price sensitivity, 
+and Indian cultural context. Still include relevant global context, but 
+Indian market relevance should be the primary lens.
+"""

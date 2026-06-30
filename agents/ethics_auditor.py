@@ -4,7 +4,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL
+from utils.config import client, MODEL , REGION_CONTEXT
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -21,9 +21,9 @@ def ethics_auditor_agent(brand_name: str) -> dict:
     
     print(f"[Ethics Auditor] Auditing {brand_name}'s sustainability claims...")
     
-    query1 = f"{brand_name} sustainability claims environmental commitments 2024 2025"
-    query2 = f"{brand_name} greenwashing controversy labor practices criticism"
-    query3 = f"{brand_name} ethical fashion certification supply chain"
+    query1 = f"{brand_name} sustainability claims environmental commitments India 2024 2025"
+    query2 = f"{brand_name} greenwashing controversy labor practices criticism India"
+    query3 = f"{brand_name} ethical fashion certification supply chain India"
     
     results = (web_search(query1, num_results=3) + 
                web_search(query2, num_results=3) + 
@@ -39,6 +39,9 @@ Your task: Investigate {brand_name}'s public sustainability and ethical claims,
 then cross-reference them with third-party evidence to identify contradictions.
 
 Brand: {brand_name}
+
+{REGION_CONTEXT}
+
 Evidence gathered:
 {search_context}
 

@@ -4,7 +4,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL
+from utils.config import client, MODEL , REGION_CONTEXT
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -21,9 +21,9 @@ def consumer_psychology_agent(brand_name: str, campaign_name: str) -> dict:
     
     print(f"[Consumer Psychology] Analyzing '{campaign_name}' by {brand_name}...")
     
-    query1 = f"{brand_name} {campaign_name} campaign consumer reaction public response"
-    query2 = f"why did {brand_name} {campaign_name} work viral marketing psychology"
-    query3 = f"{brand_name} {campaign_name} customer sentiment review Reddit Twitter"
+    query1 = f"{brand_name} {campaign_name} campaign consumer reaction India public response"
+    query2 = f"why did {brand_name} {campaign_name} work viral marketing psychology India"
+    query3 = f"{brand_name} {campaign_name} customer sentiment review India Reddit Twitter"
     
     results = (web_search(query1, num_results=3) +
                web_search(query2, num_results=3) +
@@ -40,6 +40,8 @@ frameworks. Go beyond surface-level — explain the deep psychological mechanism
 
 Brand: {brand_name}
 Campaign: {campaign_name}
+
+{REGION_CONTEXT}
 
 Evidence of consumer reactions:
 {search_context}

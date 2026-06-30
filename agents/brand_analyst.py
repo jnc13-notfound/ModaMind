@@ -4,7 +4,8 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL
+from utils.config import client, MODEL , REGION_CONTEXT
+
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -20,8 +21,8 @@ def brand_analyst_agent(brand_name: str, competitors: list[str]) -> dict:
     
     print(f"[Brand Analyst] Analyzing {brand_name} vs {', '.join(competitors)}...")
     
-    query1 = f"{brand_name} brand positioning marketing strategy 2025"
-    query2 = f"{' vs '.join(competitors)} brand comparison {brand_name} market position"
+    query1 = f"{brand_name} brand positioning marketing strategy India 2025"
+    query2 = f"{' vs '.join(competitors)} brand comparison {brand_name} India market position"
     
     results1 = web_search(query1, num_results=4)
     results2 = web_search(query2, num_results=3)
@@ -37,6 +38,8 @@ compared to its competitors.
 
 Brand: {brand_name}
 Competitors: {', '.join(competitors)}
+
+{REGION_CONTEXT}
 
 Real-world context:
 {search_context}

@@ -5,7 +5,7 @@ import os
 # This lets Python find utils/ even when running from different directories
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL
+from utils.config import client, MODEL , REGION_CONTEXT
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -25,8 +25,8 @@ def trend_scout_agent(brand_name: str, category: str) -> list[dict]:
     
     # Step 1: Search for real trend data
     # We run two different searches to get broader coverage
-    query1 = f"{brand_name} {category} fashion trends 2025"
-    query2 = f"emerging {category} trends consumer behavior 2025"
+    query1 = f"{brand_name} {category} fashion trends India 2025"
+    query2 = f"emerging {category} trends consumer behavior India 2025"
     
     results1 = web_search(query1, num_results=4)
     results2 = web_search(query2, num_results=3)
@@ -48,6 +48,8 @@ Your task: Identify the top 5 emerging trends most relevant to the brand and cat
 
 Brand: {brand_name}
 Category: {category}
+
+{REGION_CONTEXT}
 
 Real-world search data (use this as context, not as your only source):
 {search_context}
