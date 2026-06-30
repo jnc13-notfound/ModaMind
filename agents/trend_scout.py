@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.config import client, MODEL
 from utils.search import web_search
-
+from utils.parser import safe_json_parse
 
 def trend_scout_agent(brand_name: str, category: str) -> list[dict]:
     """
@@ -73,7 +73,7 @@ Format:
     
     # Step 3: Call Gemini
     print(f"[Trend Scout] Calling Gemini API...")
-    response = clients.model.generate_content(model=MODEL,
+    response = client.models.generate_content(model=MODEL,
     contents=prompt)
     raw_text = response.text.strip()
     
@@ -84,44 +84,6 @@ Format:
     
     print(f"[Trend Scout] ✓ Found {len(parsed)} trends")
     return parsed
-
-
-def safe_json_parse(text: str, fallback_agent_name: str = "Agent") -> list | dict:
-    """
-    Safely parses JSON from Gemini's response.
-    Handles the common case where Gemini wraps output in ```json ... ``` blocks.
-    
-    Why a separate function? Every agent needs this. 
-    Put it here since it's first, then we'll move it to utils later.
-    """
-    try:
-        # First try: maybe Gemini returned clean JSON directly
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-    
-    try:
-        # Second try: strip markdown code block formatting
-        if "```" in text:
-            # Extract content between ``` markers
-            parts = text.split("```")
-            for part in parts:
-                part = part.strip()
-                if part.startswith("json"):
-                    part = part[4:].strip()
-                try:
-                    return json.loads(part)
-                except:
-                    continue
-    except:
-        pass
-    
-    # If all parsing fails, return a structured fallback
-    print(f"[{fallback_agent_name}] Warning: Could not parse JSON. Returning fallback.")
-    return [{"trend_name": "Parse error - check Gemini response", 
-             "momentum_score": 0, 
-             "cultural_context": text[:200],  # Store raw text for debugging
-             "actionability": "Retry this agent"}]
 
 
 # Test block — only runs when you execute this file directly
