@@ -101,45 +101,6 @@ QUESTION: {question}
 # FUNCTION 3: Chat with a specific agent
 # ============================================================
 
-import re
-
-def style_chat_response(text):
-    if not text:
-        return text
-
-    # ### Heading
-    text = re.sub(
-        r"^### (.+)$",
-        r"<h3 style='color:#2b170d;font-weight:700;'>\1</h3>",
-        text,
-        flags=re.MULTILINE
-    )
-
-    # ## Heading
-    text = re.sub(
-        r"^## (.+)$",
-        r"<h2 style='color:#2b170d;font-weight:700;'>\1</h2>",
-        text,
-        flags=re.MULTILINE
-    )
-
-    # # Heading
-    text = re.sub(
-        r"^# (.+)$",
-        r"<h1 style='color:#2b170d;font-weight:700;'>\1</h1>",
-        text,
-        flags=re.MULTILINE
-    )
-
-    # Bold (**text**)
-    text = re.sub(
-        r"\*\*(.*?)\*\*",
-        r"<strong style='color:#2b170d;font-weight:700;'>\1</strong>",
-        text
-    )
-
-    return text
-
 def chat_with_agent(
     agent_name,
     message,
@@ -180,8 +141,6 @@ def chat_with_agent(
             chat_history,
             pipeline_state,
         )
-        
-        response_text = style_chat_response(response_text)
 
     except Exception as e:
 
@@ -219,7 +178,6 @@ def chat_with_agent(
 
     return chat_history, ""
 
-
 # ============================================================
 # CSS — Full desktop layout, Stripe nav feel, cream + charcoal
 # ============================================================
@@ -256,40 +214,26 @@ custom_css = """
     z-index: 100 !important;
 }
 
-/* ─────────────────────────────────────────────── */
-/* MODAMIND LOGO */
-/* ─────────────────────────────────────────────── */
-
-.mm-logo,
-.mm-logo .prose,
-.mm-logo .prose *,
-.mm-logo p,
-.mm-logo strong{
-    font-family:'Cormorant Garamond', Georgia, serif !important;
-    font-size:1.8rem !important;
-    font-weight:700 !important;
-    letter-spacing:.20em !important;
-    text-transform:uppercase !important;
-    color:#1a1a1a !important;
-    line-height:1 !important;
-    margin:0 !important;
+/* ── Logo — dark, bold, big ───────────────────────── */
+.mm-logo p, .mm-logo {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 1.8rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: #1a1a1a !important;
+    margin: 0 !important;
+    line-height: 1 !important;
 }
-/* ─────────────────────────────────────────────── */
-/* TAGLINE */
-/* ─────────────────────────────────────────────── */
 
-.mm-tagline,
-.mm-tagline .prose,
-.mm-tagline .prose *,
-.mm-tagline p{
-    font-family:'Inter',sans-serif !important;
-    font-size:.72rem !important;
-    font-weight:700 !important;
-    letter-spacing:.30em !important;
-    text-transform:uppercase !important;
-    color:#1a1a1a !important;
-    line-height:1.3 !important;
-    margin:0 !important;
+.mm-tagline p, .mm-tagline {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3em !important;
+    text-transform: uppercase !important;
+    color: #4a4540 !important;
+    margin: 0 !important;
 }
 
 /* ── Main content ─────────────────────────────────── */
@@ -301,49 +245,51 @@ custom_css = """
 }
 
 /* ── Tabs — always dark and visible ───────────────── */
-/* Modern Gradio Tabs */
-
-button[role="tab"]{
-    color:#1a1a1a !important;
-    opacity:1 !important;
-    font-weight:700 !important;
-    text-transform:uppercase !important;
-    letter-spacing:.12em !important;
+.tab-nav {
+    border-bottom: 2px solid #1a1a1a !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 2.5rem !important;
+    display: flex !important;
+    gap: 0 !important;
 }
 
-button[role="tab"]:hover{
-    color:#1a1a1a !important;
+.tab-nav button {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    color: #4a4540 !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    padding: 1rem 1.75rem !important;
+    margin-bottom: -2px !important;
+    cursor: pointer !important;
+    transition: color 0.15s ease !important;
 }
 
-button[role="tab"][aria-selected="true"]{
-    color:#1a1a1a !important;
-    border-bottom:3px solid #1a1a1a !important;
-    font-weight:700 !important;
+.tab-nav button:hover {
+    color: #1a1a1a !important;
+    border-bottom: 3px solid #8a8480 !important;
 }
 
-button[role="tab"][aria-selected="false"]{
-    color:#1a1a1a !important;
-    opacity:1 !important;
+.tab-nav button.selected {
+    color: #1a1a1a !important;
+    border-bottom: 3px solid #1a1a1a !important;
+    font-weight: 700 !important;
 }
 
-/* ─────────────────────────────────────────────── */
-/* SECTION HEADINGS */
-/* ─────────────────────────────────────────────── */
-
-.section-title,
-.section-title .prose,
-.section-title .prose *,
-.section-title h1,
-.section-title h2,
-.section-title h3,
-.section-title p{
-    font-family:'Cormorant Garamond', Georgia, serif !important;
-    font-size:2.2rem !important;
-    font-weight:700 !important;
-    color:#1a1a1a !important;
-    line-height:1.2 !important;
-    letter-spacing:.03em !important;
-    margin:0 0 .4rem 0 !important;
+/* ── Section titles — large, dark, serif ──────────── */
+.section-title p, .section-title {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 2.2rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.04em !important;
+    color: #1a1a1a !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.2 !important;
 }
 
 /* ── Section subtitles ────────────────────────────── */
@@ -620,14 +566,7 @@ footer { display: none !important; }
 # UI LAYOUT
 # ============================================================
 
-with gr.Blocks(
-    title="ModaMind",
-    css=custom_css,
-    theme=gr.themes.Default(
-        primary_hue="orange",
-        neutral_hue="stone"
-    )
-) as app:
+with gr.Blocks(title="ModaMind") as app:
 
     # ── Top Navigation Bar ────────────────────────────────────
     with gr.Row(elem_classes="mm-navbar"):
@@ -788,14 +727,13 @@ with gr.Blocks(
                         elem_classes="model-selector",
                         scale=1
                     )
-
                 agent_chatbot = gr.Chatbot(
-                    label="",
-                    height=420,
-                    elem_classes="chatbot-area",
-                    show_label=False,
-                    sanitize_html=False,
-                )
+
+                            label="",
+                            height=420,
+                            elem_classes="chatbot-area",
+                            show_label=False
+                        )
 
                 with gr.Row():
                     agent_message_input = gr.Textbox(
@@ -878,4 +816,4 @@ with gr.Blocks(
 # ── Launch ────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(css=custom_css)

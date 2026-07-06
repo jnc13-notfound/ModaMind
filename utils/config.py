@@ -9,15 +9,21 @@ api_key = os.getenv("API_KEY_for_ModaMind")
 if not api_key:
     raise ValueError("API_KEY_for_ModaMind not found. Check your .env file.")
 
-# New SDK uses a Client object instead of genai.configure()
 client = genai.Client(api_key=api_key)
 
-# We don't create a model object here anymore.
-# The new SDK calls client.models.generate_content() directly.
-# We export the client and the model name as a string.
+# Primary model
 MODEL = "models/gemini-flash-latest"
 
-# Shared regional weighting instruction — imported by all agents
+# Fallback models — used when primary quota is exhausted
+# User can switch between these in the UI
+AVAILABLE_MODELS = {
+    "Gemini Flash (Latest)": "models/gemini-flash-latest",
+    "Gemini 2.0 Flash": "models/gemini-2.0-flash",
+    "Gemini 2.5 Flash": "models/gemini-2.5-flash",
+    "Gemini 2.0 Flash Lite": "models/gemini-2.0-flash-lite",
+    "Gemini 2.5 Flash Lite": "models/gemini-2.5-flash-lite",
+}
+
 REGION_CONTEXT = """
 IMPORTANT REGIONAL FOCUS:
 Weight your analysis 60% toward the Indian fashion market and 40% toward 

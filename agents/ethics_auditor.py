@@ -4,7 +4,8 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL , REGION_CONTEXT
+import utils.config as cfg
+from utils.config import REGION_CONTEXT
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -67,7 +68,7 @@ Format:
 """
     
     print(f"[Ethics Auditor] Calling Gemini...")
-    response = client.models.generate_content(model=MODEL, contents=prompt)
+    response = cfg.client.models.generate_content(model=cfg.MODEL, contents=prompt)
     result = safe_json_parse(response.text, "Ethics Auditor")
     
     print(f"[Ethics Auditor] ✓ Audit complete. Credibility: {result.get('credibility_score', 'N/A')}/10")

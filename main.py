@@ -6,10 +6,12 @@ from agents.consumer_psychology import consumer_psychology_agent
 from agents.influencer_matcher import influencer_matcher_agent
 from agents.synthesis_agent import synthesis_agent
 from agents.critic_agent import critic_agent
+from agents.content_agent import content_agent
+from agents.report_agent import report_agent
 
 
 def run_pipeline(brand_name: str, category: str, campaign_name: str,
-                  competitors: list[str], target_audience: str) -> dict:
+                  competitors: list[str], target_audience: str,selected_model: str = None) -> dict:
     """
     The Orchestrator — runs all 7 agents in sequence, passing each 
     agent's output to the next as needed (A2A handoff).
@@ -21,6 +23,16 @@ def run_pipeline(brand_name: str, category: str, campaign_name: str,
     print("\n" + "=" * 60)
     print(f"  MODAMIND PIPELINE STARTING — Brand: {brand_name}")
     print("=" * 60 + "\n")
+
+    # Override model if user selected a specific one from the UI
+    if selected_model:
+        import utils.config as cfg
+        cfg.MODEL = selected_model
+
+    # If no competitors provided, let the Brand Analyst agent
+    # find them itself — we pass a placeholder that tells Gemini to research
+    if not competitors or competitors == ["a leading competitor"]:
+        competitors = ["[Research and identify the top 3 competitors yourself based on the brand and category]"]
     
     # STAGE 1: Run the 5 specialist agents
     # In a more advanced version these could run in parallel (we'll 
@@ -55,7 +67,15 @@ def run_pipeline(brand_name: str, category: str, campaign_name: str,
                                        critic_result)
         # Re-check with critic one more time
         critic_result = critic_agent(synthesis)
+     # STAGE 5: Content Agent generates campaign-ready copy
+    content = content_agent(brand_name, synthesis, psychology)
     
+    # STAGE 6: Report Agent compiles everything into the final document
+    final_report = report_agent(
+        brand_name, trends, brand_analysis, ethics, 
+        psychology, influencers, synthesis, critic_result, content
+    )
+
     print("\n" + "=" * 60)
     print(f"  PIPELINE COMPLETE — Final Critic Score: {critic_result.get('score')}/10")
     print("=" * 60 + "\n")
@@ -70,7 +90,9 @@ def run_pipeline(brand_name: str, category: str, campaign_name: str,
         "psychology": psychology,
         "influencers": influencers,
         "synthesis": synthesis,
-        "critic": critic_result
+        "critic": critic_result,
+        "content": content,
+        "report": final_report
     }
 
 

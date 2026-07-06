@@ -5,7 +5,8 @@ import os
 # This lets Python find utils/ even when running from different directories
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.config import client, MODEL , REGION_CONTEXT
+import utils.config as cfg
+from utils.config import REGION_CONTEXT
 from utils.search import web_search
 from utils.parser import safe_json_parse
 
@@ -74,9 +75,19 @@ Format:
 """
     
     # Step 3: Call Gemini
-    print(f"[Trend Scout] Calling Gemini API...")
-    response = client.models.generate_content(model=MODEL,
-    contents=prompt)
+    print("[Trend Scout] Calling Gemini API...")
+
+    try:
+        response = cfg.client.models.generate_content(
+            model=cfg.MODEL,
+            contents=prompt,
+        )
+        print("[Trend Scout] Gemini call completed.")
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise
+
     raw_text = response.text.strip()
     
     # Step 4: Parse the JSON
