@@ -67,10 +67,11 @@ Demo
 
 Setup
 
-bash
+​```bash
 git clone https://github.com/jnc13-notfound/ModaMind
 cd ModaMind
 pip install -r requirements.txt
+​```
 
 Create a .env file in the root directory:
 
@@ -78,12 +79,13 @@ GEMINI_API_KEY=your_key_here
 
 Run the app:
 
-bash
+​```bash
 python app.py
+​```
 
 The Gradio interface will launch locally with a shareable link printed to your terminal.
 
-​PROJECT SRTUCTURE:
+​```
 ModaMind/
 ├── app.py          # Gradio UI and pipeline wiring
 ├── main.py         # Pipeline orchestration
@@ -91,7 +93,7 @@ ModaMind/
 ├── utils/
 │   └── config.py   # Model config, API client setup
 └── requirements.txt
-​
+​```
 
 
 Built For
