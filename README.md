@@ -83,15 +83,15 @@ python app.py
 
 The Gradio interface will launch locally with a shareable link printed to your terminal.
 
-Project Structure
-
+​PROJECT SRTUCTURE:
 ModaMind/
-├── app.py                 # Gradio UI and pipeline wiring
-├── main.py                # Pipeline orchestration
-├── agents/                 # Individual agent logic (trend, brand, ethics, etc.)
+├── app.py          # Gradio UI and pipeline wiring
+├── main.py         # Pipeline orchestration
+├── agents/         # Individual agent logic (trend, brand, ethics, etc.)
 ├── utils/
-│   └── config.py           # Model config, API client setup
+│   └── config.py   # Model config, API client setup
 └── requirements.txt
+​
 
 
 Built For
