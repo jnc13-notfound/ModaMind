@@ -22,8 +22,16 @@ Eight specialized agents run in sequence, each feeding context to the next:
 Trend Scout → Brand Analyst → Ethics Auditor → Consumer Psychology
 → Influencer Matcher → Synthesis → Critic → Content
 
-AgentRoleTrend ScoutSurfaces emerging market and cultural signals relevant to the brandBrand AnalystMaps positioning and competitive gaps against named or auto-researched competitorsEthics AuditorVerifies sustainability/ethical claims, flags greenwashing risk with a credibility scoreConsumer PsychologyExplains why certain campaigns or positioning will resonate with the target audienceInfluencer MatcherRecommends creators fit to the brand's aesthetic and audienceSynthesisCross-agent strategic brief — connects insights across all prior agents, surfaces contradictions and opportunitiesCriticQuality-scores the full output (0–10) before finalizingContentGenerates campaign-ready copy — captions, campaign concepts, hashtags — grounded in the synthesized strategy
-
+| Agent | Role |
+|---|---|
+| Trend Scout | Surfaces emerging market and cultural signals relevant to the brand |
+| Brand Analyst | Maps positioning and competitive gaps against named or auto-researched competitors |
+| Ethics Auditor | Verifies sustainability/ethical claims, flags greenwashing risk with a credibility score |
+| Consumer Psychology | Explains why certain campaigns or positioning will resonate with the target audience |
+| Influencer Matcher | Recommends creators fit to the brand's aesthetic and audience |
+| Synthesis | Cross-agent strategic brief — connects insights across all prior agents, surfaces contradictions and opportunities |
+| Critic | Quality-scores the full output (0–10) before finalizing |
+| Content | Generates campaign-ready copy — captions, campaign concepts, hashtags — grounded in the synthesized strategy |
 On top of the pipeline, a Chat with an Agent interface lets users interrogate any individual specialist agent's findings directly, and a Report Analysis tab supports free-form Q&A grounded in the full synthesized report.
 
 Key Features
@@ -55,11 +63,12 @@ ModaMind runs locally with a single command after installing dependencies (see S
 
 Demo
 
-📺 [Video walkthrough — link here]
+📺 [Video walkthrough — https://youtu.be/g7ROaw2WZ7I?si=vU9oLFJWRYj_0RYy]
 
 Setup
 
-bashgit clone https://github.com/jnc13-notfound/ModaMind
+bash
+git clone https://github.com/jnc13-notfound/ModaMind
 cd ModaMind
 pip install -r requirements.txt
 
@@ -69,7 +78,8 @@ GEMINI_API_KEY=your_key_here
 
 Run the app:
 
-bashpython app.py
+bash
+python app.py
 
 The Gradio interface will launch locally with a shareable link printed to your terminal.
 
@@ -83,6 +93,7 @@ ModaMind/
 │   └── config.py           # Model config, API client setup
 └── requirements.txt
 
+
 Built For
 
-Google × Kaggle Agentic AI Capstone — Freestyle / [confirm your track] Track, 2026
+Google × Kaggle Agentic AI Capstone — Freestyle / Agents for business Track, 2026
